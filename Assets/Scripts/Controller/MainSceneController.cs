@@ -603,8 +603,7 @@ namespace TurnBasedGame.Controller
                     }
                     else
                     {
-                        // 如果后端返回的结构不对，尝试直接读 senderName (兼容旧逻辑)
-                        // 但应该是 senderUser
+                        // 如果后端返回的结构不对，尝试直接读 senderName
                         Debug.LogWarning($"Message {m.id} has null senderUser!");
                     }
 
@@ -700,7 +699,6 @@ namespace TurnBasedGame.Controller
             {
                 if (t.name == name) return t.GetComponent<Text>();
             }
-            // Debug.LogWarning($"Could not find Text '{name}' inside '{root.name}'");
             return null;
         }
 
@@ -711,7 +709,6 @@ namespace TurnBasedGame.Controller
             {
                 if (t.name == name) return t.GetComponent<Image>();
             }
-            // Debug.LogWarning($"Could not find Image '{name}' inside '{root.name}'");
             return null;
         }
 

@@ -462,8 +462,6 @@ namespace TurnBasedGame.Controller
         /// </summary>
         private void HandleBattleEnd(BattleEndResponse resp)
         {
-            Debug.Log($"[Battle] End. Winner: {resp.WinnerId}, Reason: {resp.EndReason}");
-
             // 1. 停止接收新消息，但不要杀掉正在跑的协程
             _isProcessingQueue = false;
             _updateQueue.Clear();

@@ -7,17 +7,52 @@ using UnityEngine.Networking;
 namespace TurnBasedGame.Core
 {
     /// <summary>
-    /// 应用配置，集中管理服务器地址和端口
+    /// 应用配置，集中管理服务器地址和端口与SSL配置
     /// 将 IP 和端口集中管理，便于部署时统一修改连接参数
     /// </summary>
     public static class AppConfig
     {
-        // SSL 开关：true = 开启SSL(生产环境/Nginx), false = 关闭SSL(开发环境/直连)
-        // 注意：关闭 SSL 连接后需要在Unity编辑器中开启HTTP开关
-        public const bool USE_SSL = true;
+        public const bool DEFAULT_SSL = true;
 
         // 服务器 IP
-        public const string SERVER_IP = "10.242.80.35";
+        public const string DEFAULT_IP = "10.242.80.35"; // 按需更改，开发或测试环境下，服务端在本机可以改为“localhost”
+
+        // ================= PlayerPrefs Keys =================
+        private const string KEY_USE_CUSTOM = "Config_UseCustom";
+        private const string KEY_CUSTOM_IP = "Config_CustomIP";
+        private const string KEY_CUSTOM_SSL = "Config_CustomSSL";
+
+        // ================= 动态配置属性 =================
+
+        /// <summary>
+        /// 是否使用自定义配置
+        /// </summary>
+        public static bool IsCustomMode => PlayerPrefs.GetInt(KEY_USE_CUSTOM, 0) == 1;
+
+        /// <summary>
+        /// SSL 开关：优先读取本地配置，否则使用默认配置
+        /// 注意：关闭 SSL 连接后需要在Unity编辑器中开启HTTP开关
+        /// </summary>
+        public static bool USE_SSL
+        {
+            get
+            {
+                if (IsCustomMode) return PlayerPrefs.GetInt(KEY_CUSTOM_SSL, DEFAULT_SSL ? 1 : 0) == 1;
+                return DEFAULT_SSL;
+            }
+        }
+
+        /// <summary>
+        /// 服务器 IP：优先读取本地配置，否则使用默认配置
+        /// </summary>
+        public static string SERVER_IP
+        {
+            get
+            {
+                if (IsCustomMode) return PlayerPrefs.GetString(KEY_CUSTOM_IP, DEFAULT_IP);
+                return DEFAULT_IP;
+            }
+        }
 
         // ================= 自动计算配置 =================
 
@@ -46,6 +81,31 @@ namespace TurnBasedGame.Core
                 return new BypassCertificateHandler();
             }
             return null;
+        }
+
+        // ================= 配置保存方法 (供 UI 调用) =================
+        public static void SaveConfig(bool useCustom, string ip, bool useSSL)
+        {
+            PlayerPrefs.SetInt(KEY_USE_CUSTOM, useCustom ? 1 : 0);
+            PlayerPrefs.SetString(KEY_CUSTOM_IP, ip);
+            PlayerPrefs.SetInt(KEY_CUSTOM_SSL, useSSL ? 1 : 0);
+            PlayerPrefs.Save();
+
+            Debug.Log($"[AppConfig] Saved: Custom={useCustom}, IP={ip}, SSL={useSSL}");
+        }
+
+        /// <summary>
+        /// 恢复默认设置
+        /// </summary>
+        public static void ResetToDefaults()
+        {
+            // 直接删除 Key，这样属性访问器就会返回默认值
+            PlayerPrefs.DeleteKey(KEY_USE_CUSTOM);
+            PlayerPrefs.DeleteKey(KEY_CUSTOM_IP);
+            PlayerPrefs.DeleteKey(KEY_CUSTOM_SSL);
+            PlayerPrefs.Save();
+
+            Debug.LogWarning("[AppConfig] Reset to defaults.");
         }
     }
 }

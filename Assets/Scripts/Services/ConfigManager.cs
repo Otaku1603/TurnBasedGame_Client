@@ -115,6 +115,17 @@ namespace TurnBasedGame.Services
             }
         }
 
+        /// <summary>
+        /// 重置状态，强制下次重新加载
+        /// </summary>
+        public void Reset()
+        {
+            IsLoaded = false;
+            SkillDict.Clear();
+            ItemDict.Clear();
+            TemplateList.Clear();
+        }
+
         public SkillConfig GetSkill(int id) => SkillDict.ContainsKey(id) ? SkillDict[id] : null;
         public ItemConfig GetItem(int id) => ItemDict.ContainsKey(id) ? ItemDict[id] : null;
     }
