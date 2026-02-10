@@ -62,11 +62,14 @@ namespace TurnBasedGame.Network
                 // 建立基础连接
                 _client.Connect(AppConfig.SERVER_IP, AppConfig.TcpPort);
 
+                Debug.Log($"[Network] Connecting to {AppConfig.SERVER_IP}:{AppConfig.TcpPort}...");
+
                 // 获取基础流
                 NetworkStream netStream = _client.GetStream();
 
                 if (AppConfig.USE_SSL)
                 {
+                    Debug.Log("[Network] SSL Enabled. Starting Handshake...");
                     // 包装 SSL 流
                     SslStream sslStream = new SslStream(
                         netStream,
@@ -77,6 +80,8 @@ namespace TurnBasedGame.Network
                     // SSL 握手
                     sslStream.AuthenticateAsClient("localhost");
                     _stream = sslStream; // 使用加密流
+
+                    Debug.Log("[Network] <color=green>SSL Handshake Success!</color>");
                 }
                 else
                 {
@@ -89,6 +94,8 @@ namespace TurnBasedGame.Network
                 _receiveThread = new Thread(ReceiveLoop);
                 _receiveThread.IsBackground = true;
                 _receiveThread.Start();
+
+                Debug.Log("[Network] Socket Thread Started.");
 
                 OnConnected?.Invoke();
             }
@@ -254,6 +261,7 @@ namespace TurnBasedGame.Network
         // 断开连接并清理资源
         public void Disconnect()
         {
+            Debug.Log("[Network] Disconnecting...");
             _isRunning = false;
             CloseSocket();
             OnDisconnected?.Invoke();

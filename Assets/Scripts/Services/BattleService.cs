@@ -1,7 +1,6 @@
-using System;
-using UnityEngine;
-using TurnBasedGame.Network;
 using GameClient.Proto;
+using System;
+using TurnBasedGame.Network;
 
 namespace TurnBasedGame.Services
 {

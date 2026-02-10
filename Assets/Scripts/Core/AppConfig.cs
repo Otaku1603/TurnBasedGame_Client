@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TurnBasedGame.Services;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -106,6 +104,18 @@ namespace TurnBasedGame.Core
             PlayerPrefs.Save();
 
             Debug.LogWarning("[AppConfig] Reset to defaults.");
+        }
+
+        // ================= 日志输出方法 (供 Debug 调用) =================
+        public static void LogEnvironment()
+        {
+            string protocol = USE_SSL ? "HTTPS/SSL" : "HTTP/TCP";
+            Debug.Log($"==================================================");
+            Debug.Log($"[Environment] Mode: {protocol}");
+            Debug.Log($"[Environment] Server: {SERVER_IP}");
+            Debug.Log($"[Environment] API: {ApiBaseUrl}");
+            Debug.Log($"[Environment] TCP Port: {TcpPort}");
+            Debug.Log($"==================================================");
         }
     }
 }

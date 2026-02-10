@@ -1,5 +1,4 @@
 using System;
-using UnityEditor;
 
 namespace TurnBasedGame.Model
 {
@@ -22,7 +21,7 @@ namespace TurnBasedGame.Model
         public string nickname;
         public int eloRating;
         public int winCount;
-        
+
         public string charType;
     }
 

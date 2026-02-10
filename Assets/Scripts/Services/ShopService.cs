@@ -1,12 +1,11 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-using UnityEngine;
-using UnityEngine.Networking;
-using Newtonsoft.Json;
-using TurnBasedGame.Model;
 using TurnBasedGame.Core;
+using TurnBasedGame.Model;
+using UnityEngine.Networking;
 
 namespace TurnBasedGame.Services
 {

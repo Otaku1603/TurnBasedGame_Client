@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
-using TurnBasedGame.Model;
 using TurnBasedGame.Core;
+using UnityEngine;
 
 namespace TurnBasedGame.Services
 {

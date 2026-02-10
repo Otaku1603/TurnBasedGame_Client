@@ -135,7 +135,8 @@ namespace TurnBasedGame.Controller
             _view.SetStatus("Registering...", false);
             _view.RegConfirmButton.interactable = false;
 
-            StartCoroutine(AuthService.Instance.Register(u, p, n, charType, (success, msg) => {
+            StartCoroutine(AuthService.Instance.Register(u, p, n, charType, (success, msg) =>
+            {
                 if (success) { _view.ShowLogin(); _view.SetStatus("Reg Success", false); }
                 else _view.SetStatus(msg, true);
             }));

@@ -1,8 +1,8 @@
-using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
 using TurnBasedGame.Services;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace TurnBasedGame.View
 {

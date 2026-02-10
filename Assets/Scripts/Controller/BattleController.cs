@@ -1,13 +1,13 @@
+using GameClient.Proto;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
+using TurnBasedGame.Core;
+using TurnBasedGame.Model;
 using TurnBasedGame.Services;
 using TurnBasedGame.View;
-using TurnBasedGame.Model;
-using GameClient.Proto;
-using TurnBasedGame.Core;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace TurnBasedGame.Controller
 {
@@ -122,6 +122,8 @@ namespace TurnBasedGame.Controller
 
             // 初始回合设置
             CheckTurn(data.CurrentActorUserId);
+
+            Debug.Log($"[Battle] <color=yellow>Battle Started!</color> ID: {_battleId}, MyUser: {_myUserId}");
         }
 
         /// <summary>
@@ -271,6 +273,8 @@ namespace TurnBasedGame.Controller
         /// </summary>
         private void EnqueueBattleUpdate(BattleUpdateResponse resp)
         {
+            Debug.Log($"[Battle] Turn Update - Round: {resp.CurrentRound}, Actor: {resp.ActorUserId}, Skill: {resp.SkillName}, Dmg: {resp.Damage}");
+
             _updateQueue.Enqueue(resp);
             if (!_isProcessingQueue)
             {
@@ -512,7 +516,7 @@ namespace TurnBasedGame.Controller
             while (true)
             {
                 //if (_view.ChatPanel && _view.ChatPanel.activeSelf)
-                    RefreshChatList();
+                RefreshChatList();
                 yield return new WaitForSeconds(3.0f);
             }
         }

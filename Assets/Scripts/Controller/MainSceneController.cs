@@ -1,11 +1,10 @@
+using GameClient.Proto;
 using System.Collections.Generic;
+using TurnBasedGame.Model;
+using TurnBasedGame.Services;
+using TurnBasedGame.View;
 using UnityEngine;
 using UnityEngine.UI;
-using TurnBasedGame.View;
-using TurnBasedGame.Services;
-using TurnBasedGame.Model;
-using TurnBasedGame.Network;
-using GameClient.Proto;
 
 namespace TurnBasedGame.Controller
 {

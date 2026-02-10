@@ -1,6 +1,6 @@
-using UnityEngine;
 using System;
 using System.Reflection;
+using UnityEngine;
 
 namespace TurnBasedGame.View
 {

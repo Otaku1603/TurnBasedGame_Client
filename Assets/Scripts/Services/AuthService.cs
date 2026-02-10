@@ -1,13 +1,13 @@
+using GameClient.Proto;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Text;
-using UnityEngine;
-using UnityEngine.Networking;
-using Newtonsoft.Json;
+using TurnBasedGame.Core;
 using TurnBasedGame.Model;
 using TurnBasedGame.Network;
-using GameClient.Proto;
-using TurnBasedGame.Core;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace TurnBasedGame.Services
 {
@@ -107,6 +107,8 @@ namespace TurnBasedGame.Services
             var reqData = new LoginRequestHttp { username = username, password = password };
             string json = JsonConvert.SerializeObject(reqData);
 
+            Debug.Log($"[Auth] Requesting login for user: {username}");
+
             Action<bool, string> internalCallback = (success, responseJson) =>
             {
                 if (success)
@@ -118,6 +120,8 @@ namespace TurnBasedGame.Services
 
                         if (response != null && response.success)
                         {
+                            Debug.Log($"[Auth] <color=green>Login HTTP Success. Token received.</color> UserID: {response.userId}");
+
                             // 字段从 response 获取
                             CurrentToken = response.token;
                             CurrentUserId = response.userId;
@@ -161,6 +165,7 @@ namespace TurnBasedGame.Services
                         }
                         else
                         {
+                            Debug.LogError($"[Auth] Login Failed: {response?.message}");
                             callback?.Invoke(false, response?.message ?? "Unknown Error");
                         }
                     }
@@ -182,6 +187,7 @@ namespace TurnBasedGame.Services
 
         private void OnTcpConnected()
         {
+            Debug.Log("[Auth] TCP Connected. Sending Login Proto...");
             // TCP 连接建立后，立即发送带 Token 的握手包，完成长连接的身份认证
             if (!string.IsNullOrEmpty(CurrentToken))
             {

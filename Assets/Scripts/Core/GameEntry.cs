@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Collections;
-using TurnBasedGame.Services;
 using TurnBasedGame.Network;
+using TurnBasedGame.Services;
+using UnityEngine;
 
 namespace TurnBasedGame.Core
 {
