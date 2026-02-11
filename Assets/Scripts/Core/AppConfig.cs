@@ -110,12 +110,10 @@ namespace TurnBasedGame.Core
         public static void LogEnvironment()
         {
             string protocol = USE_SSL ? "HTTPS/SSL" : "HTTP/TCP";
-            Debug.Log($"==================================================");
             Debug.Log($"[Environment] Mode: {protocol}");
             Debug.Log($"[Environment] Server: {SERVER_IP}");
             Debug.Log($"[Environment] API: {ApiBaseUrl}");
             Debug.Log($"[Environment] TCP Port: {TcpPort}");
-            Debug.Log($"==================================================");
         }
     }
 }

@@ -37,6 +37,9 @@ namespace TurnBasedGame.Core
             {
                 StartCoroutine(ConfigManager.Instance.LoadAllConfigs(null));
             }
+
+            // 展示网络连接配置
+            AppConfig.LogEnvironment();
         }
 
         void Update() => NetworkManager.Instance.Update();
